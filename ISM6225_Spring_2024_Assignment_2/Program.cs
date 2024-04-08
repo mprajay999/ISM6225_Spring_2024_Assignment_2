@@ -215,18 +215,45 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                List<IList<int>> ans = new List<IList<int>>();
+            IList<IList<int>> ans = new List<IList<int>>();
+            Array.Sort(nums);
+            for (int s = 0; s < nums.Length - 2; s++)
+        {
+            int target = -1 * nums[s];
+            int l = s + 1;
+            int r = nums.Length - 1;
+            
+            while (l < r)
+            {
+                int cur = nums[l] + nums[r];
+                if (cur > target)
+                    r--;
+                else if (cur < target)              // finding possible combinations for target
+                    l++;
+                else
+                {
+                    int left = nums[l];
+                    int right = nums[r];
+                    ans.Add(new List<int>(){ nums[s], left, right });
+                    if (left == right)
+                        break;
 
-                for(int i =0;i<nums.Length;i++){
-                    for(int j=0;j<i;j++){
-                        for(int k=0;k<j;k++){
-                            if(nums[i]+nums[j]+nums[k]==0){
-                                ans.Add(new List<int> { nums[i], nums[j], nums[k] });
-                            }
-                        }
-                    }
+                    
+                    while (l < r && nums[l] == left)    //if same number present as current left, skip them
+                        l++;
+
+                    
+                    while (l < r && nums[r] == right)   //if same number present as current right, skip them
+                        r--;
                 }
-                return ans;
+            }
+
+            
+            while (s < nums.Length - 2 && nums[s] == nums[s + 1])   //if same number present as current start, skip them
+                s++;
+        }
+
+        return ans;
             }
             catch (Exception)
             {
@@ -321,7 +348,7 @@ namespace ISM6225_Spring_2024_Assignment_2
                 ;
                 while(binary>0){
                     ans = ans + (binary%10)*m;
-                    m=m*2;
+                    m=m*2;       // updating the multiplication factor every iteration
                     binary=binary/10;
 
                 }
