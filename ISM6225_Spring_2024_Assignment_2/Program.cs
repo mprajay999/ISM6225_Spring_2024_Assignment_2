@@ -6,6 +6,8 @@ WRITE YOUR CODE IN THE RESPECTIVE QUESTION FUNCTION BLOCK
 
 */
 
+using System.ComponentModel;
+using System.Security.Principal;
 using System.Text;
 
 namespace ISM6225_Spring_2024_Assignment_2
@@ -100,7 +102,19 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                return 0;
+                int last_unique_number = nums[0];           // keeping a track of the last unique number
+                int unique_numbers = 1;                     // keeping a track of number of unique numbers
+
+                for(int i =1; i<nums.Length;i++){                   
+                                                            // Iterating through each element
+                    if (nums[i] != last_unique_number){  
+                        last_unique_number = nums[i];       // If a different number is found, then updating the last unique number
+                        nums[unique_numbers] = nums[i];     // updating the array with the last unique number 
+                        unique_numbers++;                   // incrementing the counter of unique numbers
+                    }
+                }
+                return unique_numbers;
+
             }
             catch (Exception)
             {
@@ -135,7 +149,22 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                return new List<int>();
+                int zero_index = 0;
+                int temp;
+                for(int i =0; i<nums.Length;i++){   // Iterating through each element to find non zero characters and swapping them
+
+                    if (nums[i] != 0){          
+                                                    // If the number is not zero then swap it with first non zero element
+                        temp=nums[i];               
+                        nums[i] = nums[zero_index];
+                        nums[zero_index] = temp;
+
+                        zero_index++;               // Incrementing non zero element index
+
+                    }
+                }
+
+                return nums;
             }
             catch (Exception)
             {
@@ -186,7 +215,18 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                return new List<IList<int>>();
+                List<IList<int>> ans = new List<IList<int>>();
+
+                for(int i =0;i<nums.Length;i++){
+                    for(int j=0;j<i;j++){
+                        for(int k=0;k<j;k++){
+                            if(nums[i]+nums[j]+nums[k]==0){
+                                ans.Add(new List<int> { nums[i], nums[j], nums[k] });
+                            }
+                        }
+                    }
+                }
+                return ans;
             }
             catch (Exception)
             {
@@ -221,7 +261,26 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                return 0;
+
+                int ans =0;
+                int counter =0;
+
+                for(int i =0; i<nums.Length;i++){
+                
+                if (nums[i]==1){            // If 1 is found increment the counter
+                    counter++;
+                    if (counter>ans){       // if the current counter is greater than any previous counter swap them
+                        ans = counter;
+                    }
+                }
+
+                else{                       // If 1 is not found , reset the counter
+                    counter =0;
+                }
+
+                }
+
+                return ans;
             }
             catch (Exception)
             {
@@ -257,7 +316,16 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                return 0;
+                int ans =0;
+                int m = 1;
+                ;
+                while(binary>0){
+                    ans = ans + (binary%10)*m;
+                    m=m*2;
+                    binary=binary/10;
+
+                }
+                return ans;
             }
             catch (Exception)
             {
@@ -295,7 +363,21 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                return 0;
+                int ans =0 ;
+                Array.Sort(nums);       // Sort the list
+                
+                for(int i =1; i<nums.Length;i++){
+
+                if ((nums[i]-nums[i-1])>ans){   // find the gap between two consecutive elements and if it is greater than our answer variable, replace it
+                    ans = nums[i]-nums[i-1];
+                }
+
+                }  
+
+                if (nums.Length<2){
+                    return 0;
+                }            
+                return ans;
             }
             catch (Exception)
             {
@@ -335,7 +417,11 @@ namespace ISM6225_Spring_2024_Assignment_2
             try
             {
                 // Write your code here and you can modify the return value according to the requirements
-                return 0;
+                Array.Sort(nums);                           
+                for (int i = nums.Length - 1; i > 1; i--)  // Traverse the array from the end as we already sorted it in increasing order
+                    if (nums[i - 1] + nums[i - 2] > nums[i]) // if a triangle is possible return its perimeter as it will be the largest
+                        return nums[i] + nums[i - 1] + nums[i - 2]; 
+                return 0;                                   // return 0 if triangle is not possible
             }
             catch (Exception)
             {
@@ -388,9 +474,23 @@ namespace ISM6225_Spring_2024_Assignment_2
         {
             try
             {
-                // Write your code here and you can modify the return value according to the requirements
-                return "";
+            // Write your code here and you can modify the return value according to the requirements
+            for(int i=0; i<s.Length; i++){
+            int j = 0;
+
+            while(j<part.Length && i+j < s.Length && s[i+j] == part[j]){ //check if characters s[i+j] is equal to part[j]
+                j++;
             }
+
+            if(j==part.Length){                                 // remove the part which is common by concating string before and after the found common string                              
+                return RemoveOccurrences(s.Substring(0, i) + s.Substring(i+j, s.Length-i-j), part); // use recursion for modified string
+            }
+        }
+
+        return s;
+
+            }
+     
             catch (Exception)
             {
                 throw;
