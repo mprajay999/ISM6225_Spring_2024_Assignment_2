@@ -478,7 +478,7 @@ namespace ISM6225_Spring_2024_Assignment_2
             for(int i=0; i<s.Length; i++){
             int j = 0;
 
-            while(j<part.Length && i+j < s.Length && s[i+j] == part[j]){ //check if characters s[i+j] is equal to part[j]
+            while(j<part.Length && i+j < s.Length && s[i+j] == part[j]){ //keep checking if characters s[i+j] is equal to part[j]
                 j++;
             }
 
